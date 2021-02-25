@@ -1,3 +1,9 @@
+"""
+Author: Ioannis Kalfas (ioannis.kalfas@kuleuven / kalfasyan@gmail.com)
+
+USAGE: python organize.py --datadir /home/kalfasyan/data/images/sticky_plates/ --nb_classes 21 --years 2019 2020
+"""
+
 import numpy as np
 seed = 42
 np.random.seed(seed)
@@ -196,7 +202,7 @@ for p, platename in tqdm(enumerate(plates)):
         spec['yolo_height'] = pd.concat([spec['width'], spec['height']], axis=1).max(axis=1) / H
 
         ann_full_new = os.path.join( path_annotations , f"{pname}.txt" )
-        img_full_new = os.path.join( path_images , pname ) + '.jpg'
+        img_full_new = os.path.join( path_images , pname ) + '.png'
 
         # SAVING IMAGES
         if not os.path.isfile( img_full_new ):

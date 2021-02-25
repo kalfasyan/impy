@@ -46,7 +46,7 @@ def get_labels(dict_or_df='df', base_dir=None):
     xlsx_classes = [fname for fname in xlsx_files if fname.split('/')[-1].split('.')[-2].endswith('geklasseerd')]
     dataframes = []
     for f in xlsx_classes:
-        sub = pd.read_excel(f)
+        sub = pd.read_excel(f, engine='openpyxl')
         sub['ID'] = sub['name plate'].map(str) + '_' + sub['index'].map(str) # '_' + sub['Klasse'].map(str) + 
         dataframes.append(sub[['ID','Klasse']])
     df = pd.concat(dataframes, axis=0)
@@ -91,7 +91,7 @@ def export_labels(dict_or_df='df', years=None, created_data_dir=None):
                 print(f"Skipping file: {f.split('/')[-1]}")
                 continue
             
-            sub = pd.read_excel(f)
+            sub = pd.read_excel(f, engine='openpyxl')
             assert sub.iloc[:,1].name == 'index'
             assert sub.iloc[:,1].iloc[0] == 0., 'Check if excel file index starts with 1 instead of 0.'        
             df = sub[list(wanted_columns_set.intersection(sub.columns))]
@@ -141,7 +141,7 @@ def export_labels(dict_or_df='df', years=None, created_data_dir=None):
 
 def analyze_img_info():
     import os
-    os.system(f"identify {SAVE_DIR}/images/*.JPG | grep 'x' > created_data_info.txt")
+    os.system(f"identify {SAVE_DIR}/images/*.png | grep 'x' > created_data_info.txt")
     df = pd.read_csv('created_data_info.txt', sep=' ', header=None)
     df['height'] = df[2].apply(lambda x: str(x).split('x')[0])
     df['width'] = df[2].apply(lambda x: str(x).split('x')[1])

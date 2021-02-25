@@ -3,7 +3,7 @@
 # Sample format
 # <annotation>
 #     <folder>_image_fashion</folder>
-#     <filename>brooke-cagle-39574.jpg</filename>
+#     <filename>brooke-cagle-39574.png</filename>
 #     <size>
 #         <width>1200</width>
 #         <height>800</height>
@@ -43,9 +43,9 @@ CLASS_MAPPING = {str(k):str(v) for k,v in mapdict.items()}
 
 def create_root(file_prefix, width, height):
     root = ET.Element("annotations")
-    ET.SubElement(root, "filename").text = "{}.jpg".format(file_prefix)
+    ET.SubElement(root, "filename").text = "{}.png".format(file_prefix)
     ET.SubElement(root, "folder").text = IMAGES_DIR_PREFIX
-    ET.SubElement(root, "path").text = os.getcwd() + '/' + "{}.jpg".format(file_prefix)
+    ET.SubElement(root, "path").text = os.getcwd() + '/' + "{}.png".format(file_prefix)
     size = ET.SubElement(root, "size")
     ET.SubElement(size, "width").text = str(width)
     ET.SubElement(size, "height").text = str(height)
@@ -78,7 +78,7 @@ def create_file(file_prefix, width, height, voc_labels):
 def read_file(file_path):
     file_prefix = file_path.split(".txt")[0]
     if file_prefix != 'classes':
-        image_file_name = "{}.jpg".format(file_prefix)
+        image_file_name = "{}.png".format(file_prefix)
         print(image_file_name)
         img = Image.open("{}/{}".format(IMAGES_DIR_PREFIX, image_file_name))
         w, h = img.size
